@@ -17,13 +17,11 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 @Entity
-//@Data
-@NoArgsConstructor
-@AllArgsConstructor
+@Data
 public class Permission {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-    @Column(name="permissionid")
+	@Column(name = "permissionId")
 	private Long permissionId;
 	@Column(unique=true)
     private String name;
@@ -35,43 +33,8 @@ public class Permission {
             mappedBy = "allpermission")
 	private Set<Role> roles;
 
-    public Long getPermissionId() {
-        return permissionId;
-    }
-
-    public void setPermissionId(Long permissionId) {
-        this.permissionId = permissionId;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public UserStatus getStatus() {
-        return status;
-    }
-
-    public void setStatus(UserStatus status) {
-        this.status = status;
-    }
-
-    public Set<Role> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
-    }
+    
+	
+    
+    
 }

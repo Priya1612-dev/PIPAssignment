@@ -1,5 +1,6 @@
 package com.EmployeeSystemManagement.entities;
 
+import java.util.Collection;
 import java.util.Date;
 import java.util.Set;
 
@@ -23,147 +24,84 @@ import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
-//@Data
-@NoArgsConstructor
-@AllArgsConstructor
-public class User {
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="userid")
-	private Long userId;
-	@Column(unique=true,name="username")
-	@NotBlank(message="username is required")
-	@Size(min=3,max=20,message="username should be between 3 and 20 characters")
-	private String username;
-	private String name;
-	@Column(unique=true)
-	private String email;
-	@NotBlank(message="password is required")
-	@Pattern(regexp="^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!*()]).{8,}$",
-			message ="Password must be 8 characters long and combination of uppercase letters, lowercase letters, numbers, special characters")
-	private String password;
-	private String salt;
-	@Enumerated(EnumType.STRING)
-	@Column(name="usertype")
-	private UserType userType;
-	@Enumerated(EnumType.STRING)
-	private UserStatus status;
-	
-	@Column(name="passwordexpiry")
-	private Date passwordExpiry;
-	@Column(name="lastlogindate")
-	private Date lastLoginDate;
-	 @ManyToMany(fetch = FetchType.LAZY)
-	    @JoinTable(name = "user_role",
-	            joinColumns = { @JoinColumn(name = "userid") },
-	            inverseJoinColumns = { @JoinColumn(name = "roleid") })
-	private Set<Role> roles;
-	private boolean deleted;
-	 public void addRole(Role role) {
-		 this.roles.add(role);
-		 role.getUsers().add(this);
-		 
-	 }
-	 public void removeRole(Role role) {
-		 this.roles.remove(role);
-		 role.getUsers().remove(this);
-	 }
+@Data
+public class User implements UserDetails {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "userId")
+    private Long userId;
+    @Column(unique = true)
+    @NotBlank(message = "username is required")
+    @Size(min = 3, max = 20, message = "username should be between 3 and 20 characters")
+    private String username;
+    private String name;
+    @Column(unique = true)
+    private String email;
+    @NotBlank(message = "password is required")
+    @Pattern(regexp = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!*()]).{8,}$",
+            message = "Password must be 8 characters long and combination of uppercase letters, lowercase letters, numbers, special characters")
+    private String password;
+    private String salt;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "userType")
+    private UserType userType;
+    @Enumerated(EnumType.STRING)
+    private UserStatus status;
 
-	public Long getUserId() {
-		return userId;
-	}
+    @Column(name = "passwordExpiry")
+    private Date passwordExpiry;
+    @Column(name = "lastLoginDate")
+    private Date lastLoginDate;
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "user_role",
+            joinColumns = {@JoinColumn(name = "userId")},
+            inverseJoinColumns = {@JoinColumn(name = "roleId")})
+    private Set<Role> roles;
+    private boolean deleted;
 
-	public void setUserId(Long userId) {
-		this.userId = userId;
-	}
+    public void addRole(Role role) {
+        this.roles.add(role);
+        role.getUsers().add(this);
 
-	public String getUsername() {
-		return username;
-	}
+    }
 
-	public void setUsername(String username) {
-		this.username = username;
-	}
+    public void removeRole(Role role) {
+        this.roles.remove(role);
+        role.getUsers().remove(this);
+    }
 
-	public String getName() {
-		return name;
-	}
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return null;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    @Override
+    public String getUsername() {
+        return this.email;
+    }
 
-	public String getEmail() {
-		return email;
-	}
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
 
-	public String getPassword() {
-		return password;
-	}
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 
-	public String getSalt() {
-		return salt;
-	}
-
-	public void setSalt(String salt) {
-		this.salt = salt;
-	}
-
-	public UserType getUserType() {
-		return userType;
-	}
-
-	public void setUserType(UserType userType) {
-		this.userType = userType;
-	}
-
-	public UserStatus getStatus() {
-		return status;
-	}
-
-	public void setStatus(UserStatus status) {
-		this.status = status;
-	}
-
-	public Date getPasswordExpiry() {
-		return passwordExpiry;
-	}
-
-	public void setPasswordExpiry(Date passwordExpiry) {
-		this.passwordExpiry = passwordExpiry;
-	}
-
-	public Date getLastLoginDate() {
-		return lastLoginDate;
-	}
-
-	public void setLastLoginDate(Date lastLoginDate) {
-		this.lastLoginDate = lastLoginDate;
-	}
-
-	public Set<Role> getRoles() {
-		return roles;
-	}
-
-	public void setRoles(Set<Role> roles) {
-		this.roles = roles;
-	}
-
-	public boolean isDeleted() {
-		return deleted;
-	}
-
-	public void setDeleted(boolean deleted) {
-		this.deleted = deleted;
-	}
 }

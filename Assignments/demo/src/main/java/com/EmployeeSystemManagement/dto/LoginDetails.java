@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserLogin {
+public class LoginDetails {
+    private String jwtToken;
     private String username;
-    private String password;
 }
