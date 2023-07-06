@@ -5,7 +5,7 @@ import java.util.Set;
 
 import com.EmployeeSystemManagement.enums.UserStatus;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

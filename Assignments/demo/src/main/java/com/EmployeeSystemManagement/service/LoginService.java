@@ -1,55 +1,76 @@
 package com.EmployeeSystemManagement.service;
 
-import com.EmployeeSystemManagement.dao.UserRepository;
-import com.EmployeeSystemManagement.dto.LoginDetails;
-import com.EmployeeSystemManagement.dto.UserLogin;
-import com.EmployeeSystemManagement.jwtUtils.JwtHelper;
+import com.EmployeeSystemManagement.dto.JwtRequest;
+import com.EmployeeSystemManagement.dto.JwtResponse;
+import com.EmployeeSystemManagement.dto.TokenRefreshRequest;
+import com.EmployeeSystemManagement.dto.TokenRefreshResponse;
+import com.EmployeeSystemManagement.exceptions.TokenRefreshException;
+import com.EmployeeSystemManagement.jwtUtils.JwtTokenUtil;
+import com.EmployeeSystemManagement.jwtUtils.JwtUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+import javax.validation.Valid;
 
 @Service
 public class LoginService {
     @Autowired
-    private UserRepository userRepo;
-    @Autowired
-    private AuthenticationManager manager;
+    private AuthenticationManager authenticationManager;
 
     @Autowired
-    private JwtHelper helper;
+    private JwtTokenUtil jwtTokenUtil;
+
+    @Autowired
+    private JwtUserDetailsService userDetailsService;
+
+    @Autowired
+    UserService userService;
+    public JwtResponse createAuthenticationToken(JwtRequest userLogin) throws Exception {
+
+        authenticate(userLogin.getUsername(), userLogin.getPassword());
+
+        final UserDetails userDetails = userDetailsService
+                .loadUserByUsername(userLogin.getUsername());
+
+//		User user = userService.getUserByUserName(userLogin.getUsername());
 
 
-    public LoginDetails userLogin(UserLogin loginDetails) {
+        final String token = jwtTokenUtil.generateToken(userDetails);
 
-        this.doAuthenticate(loginDetails.getUsername(), loginDetails.getPassword());
-
-        UserDetails userDetails = userRepo.findByUsername(loginDetails.getUsername());
-        String token =generateToken(userDetails);
-
-        LoginDetails response = LoginDetails.builder()
-                .jwtToken(token)
-                .username(userDetails.getUsername()).build();
-        return  response;
+        return new JwtResponse(token, userDetails.getUsername());
     }
-    //@Cacheable(value = "")
-    public String generateToken(UserDetails userDetails){
-      return  this.helper.generateToken(userDetails);
-    }
 
-    private void doAuthenticate(String UserName, String password) {
 
-        UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(UserName, password);
+    private void authenticate(String username, String password) throws Exception {
         try {
-            manager.authenticate(authentication);
-
-
+            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
+        } catch (DisabledException e) {
+            throw new Exception("USER_DISABLED", e);
         } catch (BadCredentialsException e) {
-            throw new BadCredentialsException(" Invalid Username or Password  !!");
+            throw new Exception("INVALID_CREDENTIALS", e);
         }
+    }
+    public ResponseEntity<?> refreshtoken(TokenRefreshRequest request) {
+        String requestRefreshToken = request.getRefreshToken();
 
+        return refreshTokenService.findByToken(requestRefreshToken)
+                .map(refreshTokenService::verifyExpiration)
+                .map(RefreshToken::getUser)
+                .map(user -> {
+                    String token = jwtTokenUtil.generateToken(user.getUsername());
+                    return ResponseEntity.ok(new TokenRefreshResponse(token, requestRefreshToken));
+                })
+                .orElseThrow(() -> new TokenRefreshException(requestRefreshToken,
+                        "Refresh token is not in database!"));
     }
 
 
