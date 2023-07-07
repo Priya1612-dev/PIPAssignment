@@ -22,6 +22,9 @@ public class JwtTokenUtil{
     @Value("${JWT_TOKEN_VALIDITY}")
     private Long tokenValidity;
 
+    @Value("${JWT_TOKEN_REFRESH_VALIDITY}")
+    private Long tokenRefreshValidity;
+
     @Value("${JWT_TOKEN_SECRET}")
     private String secret;
 
@@ -55,12 +58,14 @@ public class JwtTokenUtil{
         Map<String, Object> claims = new HashMap<>();
         return doGenerateToken(claims, userDetails.getUsername());
     }
+    public String doGenerateRefreshToken(Map<String, Object> claims, String subject) {
+       return Jwts.builder().setClaims(claims).setSubject(subject).setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis() + tokenRefreshValidity * 1000))
+                .signWith(SignatureAlgorithm.HS512, secret).compact();
 
-    //while creating the token -
-    //1. Define  claims of the token, like Issuer, Expiration, Subject, and the ID
-    //2. Sign the JWT using the HS512 algorithm and secret key.
-    //3. According to JWS Compact Serialization(https://tools.ietf.org/html/draft-ietf-jose-json-web-signature-41#section-3.1)
-    //   compaction of the JWT to a URL-safe string
+    }
+
+
     private String doGenerateToken(Map<String, Object> claims, String subject) {
 
         return Jwts.builder().setClaims(claims).setSubject(subject).setIssuedAt(new Date(System.currentTimeMillis()))

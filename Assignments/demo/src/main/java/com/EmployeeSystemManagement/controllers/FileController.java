@@ -1,25 +1,32 @@
 package com.EmployeeSystemManagement.controllers;
 
-import com.EmployeeSystemManagement.service.FileService;
-import com.jcraft.jsch.ChannelSftp;
-import com.jcraft.jsch.JSch;
-import com.jcraft.jsch.Session;
+import org.example.SFTPConnect;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.ByteArrayOutputStream;
-
 @RestController
 public class FileController {
+    @Value("${SFTP_USERNAME}")
+    private String sftpUsername;
+    @Value("${SFTP_PORT}")
+    private int sftpPort;
+    @Value("${SFTP_PASSWORD}")
+    private String sftpPassword;
+    @Value("${SFTP_HOST}")
+    private String sftpHost;
+    @Value("${SFTP_DIRECTORY}")
+    private String sftpDirectory;
 
-    @Autowired
-   private FileService fileService;
+    private SFTPConnect sftpConnect;
     @GetMapping("/readFileFromSftp")
-    public ResponseEntity<String> readFileFromSftp(@RequestParam String fileName){
-        String fileFromSftp=fileService.readFileFromSftp(fileName);
-        return new ResponseEntity<>(fileFromSftp,HttpStatus.OK);
+    public ResponseEntity<String> readFileFromSftp(@RequestParam String fileName,
+                                                   String sftpHost,String sftpUsername,
+                                                    String sftpPassword,String sftpDirectory){
+      String fileContent=sftpConnect.readFileFromSftp(sftpHost,sftpPort,sftpUsername,sftpPassword,sftpDirectory,fileName);
+      return new ResponseEntity<>(fileContent,HttpStatus.OK);
     }
 
 }

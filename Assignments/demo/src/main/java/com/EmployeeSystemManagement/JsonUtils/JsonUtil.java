@@ -10,11 +10,9 @@
 //
 //public class JsonUtil {
 //    private static final ObjectMapper objectMapper=new ObjectMapper();
-//    public static <T> List<T> parseJsonFile(String filePath, Class<T> targetType) throws IOException {
-//        String fileContent=readFileContent(filePath);
-//        return objectMapper.readValue(fileContent,new TypeReference<List<T>>(){});
-//    }
-//    private  static String readFileContent(String filePath) throws IOException {
-//        return Files.readString(Paths.get(filePath));
-//    }
+//    public static <T> List<T> parseJsonFile(String fileContent, Employee employee) throws IOException {
+//         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+//        Employees[] readValue = mapper.readValue(fileContent, Employees[].class);
+//        }Cl
 //}
+
