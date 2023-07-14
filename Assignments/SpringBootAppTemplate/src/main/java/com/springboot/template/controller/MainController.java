@@ -5,13 +5,17 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Set;
 import java.util.zip.ZipOutputStream;
 
 import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactoryConfigurationError;
 
+import com.springboot.template.utils.MapUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -71,6 +75,11 @@ public class MainController {
 						+ "\\TicketApplication\\src\\main\\java\\com\\hm\\"
 						+ "TicketApplication.java",
 				projectInput.getName() + "Application");
+	}
+	@GetMapping("/listOfDependency")
+	public ResponseEntity<Set<String>> getAllDependency(){
+		return new ResponseEntity<>(MapUtil.getDependencyMap().keySet(), HttpStatus.OK);
+
 	}
 
 
