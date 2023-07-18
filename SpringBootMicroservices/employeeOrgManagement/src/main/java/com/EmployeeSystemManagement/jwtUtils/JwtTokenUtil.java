@@ -51,7 +51,7 @@ public class JwtTokenUtil{
     }
 
     //generate token for user
-    @Cacheable(key="#userDetails")
+
     public String generateToken(UserDetails userDetails) {
         Map<String, Object> claims = new HashMap<>();
         return doGenerateToken(claims, userDetails.getUsername());
@@ -74,5 +74,6 @@ public class JwtTokenUtil{
         final String username = getUsernameFromToken(token);
         return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }
+
 }
 

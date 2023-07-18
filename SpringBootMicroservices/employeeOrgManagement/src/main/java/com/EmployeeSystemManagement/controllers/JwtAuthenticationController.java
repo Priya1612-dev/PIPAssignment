@@ -12,6 +12,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -37,11 +38,14 @@ public class JwtAuthenticationController {
 	private JwtAuthenticationService jwtAuthenticationService;
 
 
+
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public ResponseEntity<?> createAuthenticationToken(@RequestBody UserLogin userLogin) throws Exception {
 		LoginDetails details=jwtAuthenticationService.createAuthenticationToken(userLogin);
 		return ResponseEntity.ok(details);
 	}
+
+
 
 }
 

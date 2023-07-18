@@ -8,6 +8,7 @@ import com.EmployeeSystemManagement.jwtUtils.JwtTokenUtil;
 import com.EmployeeSystemManagement.jwtUtils.JwtUserDetailsService;
 import io.jsonwebtoken.impl.DefaultClaims;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
@@ -29,7 +30,7 @@ public class JwtAuthenticationService {
 
     @Autowired
     private JwtUserDetailsService userDetailsService;
-
+    @Cacheable(key="#userLogin.username",value="loginDetails.token",unless = "#loginDetails != null")
     public LoginDetails createAuthenticationToken(UserLogin userLogin) throws Exception {
 
         authenticate(userLogin.getUsername(), userLogin.getPassword());

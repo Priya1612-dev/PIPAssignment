@@ -5,11 +5,11 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 @Data
-@Builder
-@NoArgsConstructor
 @AllArgsConstructor
-public class LoginDetails {
+public class LoginDetails implements  Serializable{
     private String jwtToken;
     private String username;
 }

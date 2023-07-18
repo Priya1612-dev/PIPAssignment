@@ -50,7 +50,7 @@ public class WebSecurityConfig{
 
 		http.csrf(csrf -> csrf.disable())
 				.authorizeRequests().
-				requestMatchers("").authenticated().requestMatchers("/login","/user","/readFileFromSftp").permitAll()
+				requestMatchers("").authenticated().requestMatchers("/login","/user","/employee").permitAll()
 				.anyRequest()
 				.authenticated()
 				.and().exceptionHandling(ex -> ex.authenticationEntryPoint(jwtAuthenticationEntryPoint))
