@@ -59,9 +59,7 @@ public class EmployeeService {
         ConvertUtil convertUtil=new ConvertUtil();
 
         String fileContent = sftpConnect.readFileFromSftp(sftpHost, sftpPort, sftpUsername, sftpPassword, sftpDirectory, fileName);
-
         List<Employees> employees =convertUtil.convertJsonToPojoEmployee(fileContent);
-
         webClient.post().uri("/saveEmployee").bodyValue(employees).retrieve()
                 .bodyToMono(Void.class).block();
 

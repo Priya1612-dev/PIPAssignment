@@ -29,7 +29,7 @@ public class Employee {
     private String role;
     private String fullName;
     private String competency;
-    private String Domain;
+    private String domain;
     private String phoneNumber;
     private String emailAddress;
 

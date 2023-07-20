@@ -3,8 +3,8 @@ package com.EmployeeSystemManagement.controllers;
 import java.util.List;
 
 import java.util.Set;
-import java.util.stream.Collectors;
 
+import com.EmployeeSystemManagement.entities.Permission;
 import com.EmployeeSystemManagement.service.PermissionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,10 +16,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.EmployeeSystemManagement.entities.Permission;
 import com.EmployeeSystemManagement.entities.User;
 import com.EmployeeSystemManagement.enums.UserStatus;
-import com.EmployeeSystemManagement.exceptions.ResourceNotFoundException;
 import com.EmployeeSystemManagement.entities.Role;
 
 @RestController

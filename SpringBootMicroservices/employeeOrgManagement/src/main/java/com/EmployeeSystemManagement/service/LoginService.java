@@ -32,9 +32,6 @@ public class LoginService {
         final UserDetails userDetails = userDetailsService
                 .loadUserByUsername(userLogin.getUsername());
 
-//		User user = userService.getUserByUserName(userLogin.getUsername());
-
-
         final String token = jwtTokenUtil.generateToken(userDetails);
 
         return new LoginDetails(token, userDetails.getUsername());
@@ -50,19 +47,7 @@ public class LoginService {
             throw new Exception("INVALID_CREDENTIALS", e);
         }
     }
-//    public ResponseEntity<?> refreshtoken(TokenRefreshRequest request) {
-//        String requestRefreshToken = request.getRefreshToken();
-//
-//        return refreshTokenService.findByToken(requestRefreshToken)
-//                .map(refreshTokenService::verifyExpiration)
-//                .map(RefreshToken::getUser)
-//                .map(user -> {
-//                    String token = jwtTokenUtil.generateToken(user.getUsername());
-//                    return ResponseEntity.ok(new TokenRefreshResponse(token, requestRefreshToken));
-//                })
-//                .orElseThrow(() -> new TokenRefreshException(requestRefreshToken,
-//                        "Refresh token is not in database!"));
-//    }
+
 
 
 

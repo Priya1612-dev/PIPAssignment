@@ -2,9 +2,9 @@ package com.EmployeeSystemManagement.dao;
 
 import java.util.List;
 
+import com.EmployeeSystemManagement.entities.Permission;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.EmployeeSystemManagement.entities.Permission;
 import com.EmployeeSystemManagement.enums.UserStatus;
 import org.springframework.stereotype.Repository;
 

@@ -5,10 +5,7 @@ import com.EmployeeSystemManagement.entities.Role;
 import com.EmployeeSystemManagement.enums.UserStatus;
 import com.EmployeeSystemManagement.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 @Service
@@ -33,6 +30,7 @@ public class RoleService {
 
 
     public List<Role> getAllRoles(){
+
         return roleRepo.findAll();
     }
 

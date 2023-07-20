@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.EmployeeSystemManagement.entities.Role;
 import com.EmployeeSystemManagement.enums.UserStatus;
-import com.EmployeeSystemManagement.exceptions.ResourceNotFoundException;
 
 @RestController
 public class RoleController {

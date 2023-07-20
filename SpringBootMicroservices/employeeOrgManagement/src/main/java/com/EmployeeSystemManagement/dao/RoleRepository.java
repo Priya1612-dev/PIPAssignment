@@ -11,4 +11,5 @@ import com.EmployeeSystemManagement.enums.UserStatus;
 public interface RoleRepository extends JpaRepository<Role, Long>  {
 
 	List<Role> findRoleByNameAndStatus(String name, UserStatus status);
+
 }

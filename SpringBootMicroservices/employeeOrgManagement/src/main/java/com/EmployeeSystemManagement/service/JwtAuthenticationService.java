@@ -38,7 +38,6 @@ public class JwtAuthenticationService {
         final UserDetails userDetails = userDetailsService
                 .loadUserByUsername(userLogin.getUsername());
 
-//		User user = userService.getUserByUserName(userLogin.getUsername());
 
         final String token = jwtTokenUtil.generateToken(userDetails);
 
@@ -55,15 +54,6 @@ public class JwtAuthenticationService {
             throw new Exception("INVALID_CREDENTIALS", e);
         }
     }
-
-//    public String refreshtoken(HttpServletRequest request) throws Exception {
-//        // From the HttpRequest get the claims
-//        DefaultClaims claims = (io.jsonwebtoken.impl.DefaultClaims) request.getAttribute("claims");
-//
-//        Map<String, Object> expectedMap = getMapFromIoJsonwebtokenClaims(claims);
-//        String token = jwtTokenUtil.doGenerateRefreshToken(expectedMap, expectedMap.get("sub").toString());
-//        return token;
-//    }
 
     public Map<String, Object> getMapFromIoJsonwebtokenClaims(DefaultClaims claims) {
         Map<String, Object> expectedMap = new HashMap<String, Object>();
