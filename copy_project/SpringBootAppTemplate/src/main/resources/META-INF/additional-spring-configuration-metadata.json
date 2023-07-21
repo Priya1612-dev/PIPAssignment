@@ -1,0 +1,67 @@
+{"properties": [
+  {
+    "name": "project.groupId",
+    "type": "java.lang.String",
+    "description": "A description for 'project.groupId'"
+  },
+  {
+    "name": "project.pom.filepath",
+    "type": "java.lang.String",
+    "description": "A description for 'project.pom.filepath'"
+  },
+  {
+    "name": "project.web.groupId",
+    "type": "java.lang.String",
+    "description": "A description for 'project.web.groupId'"
+  },
+  {
+    "name": "project.web.artifactId",
+    "type": "java.lang.String",
+    "description": "A description for 'project.web.artifactId'"
+  },
+  {
+    "name": "project.test.groupId",
+    "type": "java.lang.String",
+    "description": "A description for 'project.test.groupId'"
+  },
+  {
+    "name": "project.test.artifactId",
+    "type": "java.lang.String",
+    "description": "A description for 'project.test.artifactId'"
+  },
+  {
+    "name": "project.data-jpa.groupId",
+    "type": "java.lang.String",
+    "description": "A description for 'project.data-jpa.groupId'"
+  },
+  {
+    "name": "project.data-jpa.artifactId",
+    "type": "java.lang.String",
+    "description": "A description for 'project.data-jpa.artifactId'"
+  },
+  {
+    "name": "project.mysql.groupId",
+    "type": "java.lang.String",
+    "description": "A description for 'project.mysql.groupId'"
+  },
+  {
+    "name": "project.mysql.artifactId",
+    "type": "java.lang.String",
+    "description": "A description for 'project.mysql.artifactId'"
+  },
+  {
+    "name": "project.data-jpa.artifactId",
+    "type": "java.lang.String",
+    "description": "A description for 'project.data-jpa.artifactId'"
+  },
+  {
+    "name": "project.dependency.groupId.spring-web",
+    "type": "java.lang.String",
+    "description": "A description for 'project.dependency.groupId.spring-web'"
+  },
+  {
+    "name": "project.dependency.artifactId.spring-web",
+    "type": "java.lang.String",
+    "description": "A description for 'project.dependency.artifactId.spring-web'"
+  }
+]}
